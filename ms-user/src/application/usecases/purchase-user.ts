@@ -12,8 +12,6 @@ export class PurchaseUser {
     public constructor(
         private userRepository: UserRepository,
         private messageQueue: Producer
-
-
     ) { }
 
     async execute({ name, email, phoneNumber }: PurchaseUserRequest): Promise<void> {
