@@ -1,19 +1,15 @@
 import 'dotenv/config';
-
 import express, { Request, Response } from 'express';
-import { Consumer } from '../messaging/rabbitMQ/consumer';
+import { getNotificationsController } from '../controllers';
+import { main } from '../messaging/rabbitMQ/consumer';
 
 const app = express();
+app.use(express.json());
 
-app.use(express.json())
+main()
 
 app.get('/notifications', async (request: Request, response: Response) => {
-
-    const notify = new Consumer();
-
-    const data = await notify.consumeMessage();
-
-    response.status(200).json(data);
+    return getNotificationsController.handle(request, response);
 })
 
 app.listen(3001, () => {
