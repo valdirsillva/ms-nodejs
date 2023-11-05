@@ -2,19 +2,19 @@ import { v4 as uuidv4 } from 'uuid';
 import { Producer } from "../../infra/messaging/rabbitMQ/producer";
 import { UserRepository } from "../repositories/user-repository";
 
-interface PurchaseUserRequest {
+interface UserRequest {
     name: string;
     email: string;
     phoneNumber: string;
 }
 
-export class PurchaseUser {
+export class User {
     public constructor(
         private userRepository: UserRepository,
         private messageQueue: Producer
     ) { }
 
-    async execute({ name, email, phoneNumber }: PurchaseUserRequest): Promise<void> {
+    async execute({ name, email, phoneNumber }: UserRequest): Promise<void> {
         const user = await this.userRepository.findById(email);
 
         const userExists = !!user;

@@ -1,7 +1,8 @@
 import 'dotenv/config';
 
 import express, { Request, Response } from 'express';
-import { createUserController, purchaseUserController } from '../controllers';
+import { createUserController, getUserController } from '../controllers';
+import { prisma } from '../database/prisma/prisma';
 const app = express();
 
 app.use(express.json())
@@ -11,7 +12,8 @@ app.get('/', (request: Request, response: Response) => {
 })
 
 app.get('/users', (request: Request, response: Response) => {
-    return purchaseUserController.handle(request, response);
+    // await prisma.user.deleteMany();
+    return getUserController.handle(request, response);
 })
 
 app.post('/users', async (request: Request, response: Response) => {

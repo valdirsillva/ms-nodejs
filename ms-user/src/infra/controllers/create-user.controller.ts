@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { PurchaseUser } from "../../application/usecases/purchase-user";
+import { User } from "../../application/usecases/user";
 
 export class CreateUserController {
-    constructor(private purchaseUser: PurchaseUser) { }
+    constructor(private user: User) { }
 
     async handle(req: Request, res: Response): Promise<Response> {
         const data = req.body
@@ -11,7 +11,7 @@ export class CreateUserController {
             if (data.nome == '' && data.email)
                 return res.status(400).json({ message: 'Nome e email devem ser preenchidos' })
 
-            const user = await this.purchaseUser.execute(data);
+            const user = await this.user.execute(data);
 
             return res.status(201).json(user);
         } catch (err: any) {

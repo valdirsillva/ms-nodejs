@@ -1,13 +1,13 @@
-import { PurchaseUser } from "../../application/usecases/purchase-user";
+import { User } from "../../application/usecases/user";
 import { PrismaUserRepository } from "../database/prisma/repositories/prisma-user-repository";
 import { Producer } from "../messaging/rabbitMQ/producer";
 import { CreateUserController } from "./create-user.controller";
-import { PurchaseUserController } from "./purchase-user.controller";
+import { UserController } from "./user.controller";
 
 const messageQueue = new Producer()
 const prismaUserRepository = new PrismaUserRepository();
-const purchaseUser = new PurchaseUser(prismaUserRepository, messageQueue);
-const purchaseUserController = new PurchaseUserController(purchaseUser);
-const createUserController = new CreateUserController(purchaseUser);
+const userInstance = new User(prismaUserRepository, messageQueue);
+const getUserController = new UserController(userInstance);
+const createUserController = new CreateUserController(userInstance);
 
-export { purchaseUserController, createUserController }
+export { getUserController, createUserController }
